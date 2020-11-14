@@ -61,27 +61,26 @@ class War {
         this.saxonArmy.push(saxon);
     }
 
-    vikingAttack() {
-        let battler1 = this.saxonArmy.pop();
-        let battler2 = this.vikingArmy.pop();
+    attack(attacker, victim) {
+        let rand_attacker = Math.floor(Math.random() * attacker.length);
+        let rand_victim = Math.floor(Math.random() * victim.length);
+        let battler1 = victim.pop();
+        let battler2 = attacker.pop();
         let attackDamage = battler1.receiveDamage(battler2.attack());
         if (battler1.health > 0) {
-            this.saxonArmy.push(battler1);
+            victim.push(battler1);
         }
-        this.vikingArmy.push(battler2);
+        attacker.push(battler2);
 
         return attackDamage;
     }
 
+    vikingAttack() {
+        return this.attack(this.vikingArmy, this.saxonArmy);
+    }
+
     saxonAttack() {
-        let battler1 = this.vikingArmy.pop();
-        let battler2 = this.saxonArmy.pop();
-        let attackDamage = battler1.receiveDamage(battler2.attack());
-        if (battler1.health > 0) {
-            this.vikingArmy.push(battler1);
-        }
-        this.saxonArmy.push(battler2);
-        return attackDamage;
+        return this.attack(this.saxonArmy, this.vikingArmy);
     }
 
     showStatus() {
